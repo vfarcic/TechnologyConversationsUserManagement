@@ -18,8 +18,7 @@ public class UserTest {
 
     @Before
     public void beforeUserTest() {
-        user = new User();
-        user.setUserName(userName);
+        user = new User(userName);
         user.setPassword(password);
         user.setFullName(fullName);
         user.setUpdated(updated);
@@ -75,8 +74,7 @@ public class UserTest {
 
     @Test
     public void equalsShouldFailIfUsernameIsNotTheSame() {
-        User actual = new User();
-        actual.setUserName("something");
+        User actual = new User("something");
         actual.setPassword(password);
         actual.setFullName(fullName);
         actual.setUpdated(updated);
@@ -85,8 +83,7 @@ public class UserTest {
 
     @Test
     public void equalsShouldFailIfPasswordIsNotTheSame() {
-        User actual = new User();
-        actual.setUserName(userName);
+        User actual = new User(userName);
         actual.setPassword("something");
         actual.setFullName(fullName);
         actual.setUpdated(updated);
@@ -95,8 +92,7 @@ public class UserTest {
 
     @Test
     public void equalsShouldFailIfFullNameIsNotTheSame() {
-        User actual = new User();
-        actual.setUserName(userName);
+        User actual = new User(userName);
         actual.setPassword(password);
         actual.setFullName("something");
         actual.setUpdated(updated);
@@ -105,8 +101,7 @@ public class UserTest {
 
     @Test
     public void equalsShouldNotFailIfUserNamePasswordAndFullNameAreTheSame() {
-        User actual = new User();
-        actual.setUserName(userName);
+        User actual = new User(userName);
         actual.setPassword(password);
         actual.setFullName(fullName);
         actual.setUpdated(updated);

@@ -1,7 +1,6 @@
 package com.technologyconversations.usermanagement;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -10,6 +9,12 @@ import java.util.Date;
 @Entity
 @Table(name = "User")
 public class User {
+
+    public User() {}
+
+    public User(String userName) {
+        this.setUserName(userName);
+    }
 
     @Id
     @Column(name = "user_name")

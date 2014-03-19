@@ -10,4 +10,8 @@ public interface UserDao {
 
     abstract User getUser(String userName);
 
+    abstract void deleteAllUsers();
+
+    abstract void deleteUser(String userName);
+
 }
