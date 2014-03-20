@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import static com.technologyconversations.usermanagement.StatusEnum.*;
 
-@Path("user/{userName}.json")
+@Path("users/user/{userName}.json")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 

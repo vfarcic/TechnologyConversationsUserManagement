@@ -35,7 +35,7 @@ public class UsersResourceTest {
         }
         server = Main.startServer();
         Client c = ClientBuilder.newClient();
-        target = c.target(Main.BASE_URI).path("users.json");
+        target = c.target(Main.BASE_URI).path("users/all.json");
         mapper = new ObjectMapper();
     }
 
@@ -45,49 +45,50 @@ public class UsersResourceTest {
     }
 
     @Test
-    public void usersJsonShouldReturnStatus200() {
+    public void usersAllJsonShouldReturnStatus200() {
         assertThat(target.request().head().getStatus(), is(200));
     }
 
     @Test
-    public void getUsersShouldReturnTypeApplicationJson() {
+    public void getAllUsersShouldReturnTypeApplicationJson() {
         assertThat(target.request().get().getMediaType().toString(), is("application/json"));
     }
 
 
     @Test
-    public void getUsersShouldReturnStatus200() {
+    public void getAllUsersShouldReturnStatus200() {
         assertThat(target.request().get().getStatus(), is(200));
     }
 
     @Test
-    public void getUsersShouldReturnTheListOfAllUsers() throws Exception {
+    public void getAllUsersShouldReturnTheListOfAllUsers() throws Exception {
         String json = target.request().get(String.class);
         List<User> users = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
         assertThat(users.size(), is(3));
     }
 
     @Test
-    public void deleteUsersShouldReturnStatus200() {
+    public void deleteAllUsersShouldReturnStatus200() {
         assertThat(target.request().delete().getStatus(), is(200));
     }
 
     @Test
-    public void deleteUsersShouldReturnTypeApplicationJson() {
+    public void deleteAllUsersShouldReturnTypeApplicationJson() {
         assertThat(target.request().delete().getMediaType().toString(), is("application/json"));
     }
 
     @Test
-    public void deleteUsersShouldReturnStatusOK() throws Exception {
+    public void deleteAllUsersShouldReturnStatusOK() throws Exception {
         String json = target.request().delete(String.class);
         Status status = mapper.readValue(json, Status.class);
         assertThat(status.getStatus(), is(OK));
     }
 
     @Test
-    public void deleteUsersShouldDeleteAllUsers() throws Exception {
+    public void deleteAllUsersShouldDeleteAllUsers() throws Exception {
         target.request().delete(String.class);
         assertThat(UserDaoImpl.getInstance().getAllUsers().size(), is(0));
     }
+
 
 }

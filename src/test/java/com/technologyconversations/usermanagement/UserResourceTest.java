@@ -38,7 +38,7 @@ public class UserResourceTest extends CommonTest {
         userDao.putUser(user);
         server = Main.startServer();
         client = ClientBuilder.newClient();
-        target = client.target(Main.BASE_URI).path("user/vfarcic.json");
+        target = client.target(Main.BASE_URI).path("users/user/vfarcic.json");
         objectMapper = new ObjectMapper();
         userJson = objectMapper.writeValueAsString(user);
     }
@@ -73,7 +73,7 @@ public class UserResourceTest extends CommonTest {
 
     @Test
     public void getUserShouldReturnStatusNokIfSpecifiedUserDoesNotExist() throws Exception {
-        target = client.target(Main.BASE_URI).path("user/non_existent_user.json");
+        target = client.target(Main.BASE_URI).path("users/user/non_existent_user.json");
         String json = target.request().get(String.class);
         User actual =  objectMapper.readValue(json, User.class);
         assertThat(actual.getStatus(), is(NOK));
@@ -106,7 +106,7 @@ public class UserResourceTest extends CommonTest {
 
     @Test
     public void deleteUserShouldReturnStatusNokIfSpecifiedUserDoesNotExist() throws Exception {
-        target = client.target(Main.BASE_URI).path("user/non_existent_user.json");
+        target = client.target(Main.BASE_URI).path("users/user/non_existent_user.json");
         String json = target.request().delete(String.class);
         User actual =  objectMapper.readValue(json, User.class);
         assertThat(actual.getStatus(), is(equalTo(NOK)));
