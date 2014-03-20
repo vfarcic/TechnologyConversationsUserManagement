@@ -4,10 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import static com.technologyconversations.usermanagement.StatusEnum.*;
 
 @Entity
 @Table(name = "User")
+@XmlRootElement
 public class User {
 
     public User() {}
@@ -51,6 +54,15 @@ public class User {
     }
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+
+    private StatusEnum status = OK;
+    public StatusEnum getStatus() {
+        return status;
+    }
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
     @Override

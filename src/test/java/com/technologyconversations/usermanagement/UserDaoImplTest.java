@@ -4,14 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
-public class UserDaoImplTest {
+public class UserDaoImplTest extends CommonTest {
 
     private UserDao userDao;
     private User user;
@@ -20,7 +19,7 @@ public class UserDaoImplTest {
 
     @Before
     public void beforeUserDaoImplTest() {
-        userDao = new UserDaoImpl();
+        userDao = UserDaoImpl.getInstance();
         user = new User(userName);
         user.setPassword("password");
         user.setFullName(fullName);
@@ -76,14 +75,11 @@ public class UserDaoImplTest {
         assertThat(userDao.getAllUsers().size(), is(2));
     }
 
-    private List<String> insertUsers(int count) {
-        List<String> userNames = new ArrayList<>();
-        for (int i = 1; i <= count; i++) {
-            user.setUserName(userName + i);
-            userDao.putUser(user);
-            userNames.add(userName + i);
-        }
-        return userNames;
+    @Test
+    public void deleteUserShouldReturnDeletedUser() {
+        userDao.putUser(user);
+        User actual = userDao.deleteUser(user.getUserName());
+        assertThat(actual, is(equalTo(user)));
     }
 
 }

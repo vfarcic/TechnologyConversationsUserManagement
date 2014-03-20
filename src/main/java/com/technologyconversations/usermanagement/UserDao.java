@@ -6,12 +6,12 @@ public interface UserDao {
 
     abstract List<User> getAllUsers();
 
-    abstract void putUser(User user);
+    abstract void deleteAllUsers();
 
     abstract User getUser(String userName);
 
-    abstract void deleteAllUsers();
+    abstract User deleteUser(String userName);
 
-    abstract void deleteUser(String userName);
+    abstract void putUser(User user);
 
 }

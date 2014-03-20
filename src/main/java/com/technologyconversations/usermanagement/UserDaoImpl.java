@@ -6,6 +6,16 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+    private static volatile UserDao instance = null;
+    private UserDaoImpl() { }
+
+    public static synchronized UserDao getInstance() {
+        if (instance == null) {
+            instance = new UserDaoImpl();
+        }
+        return instance;
+    }
+
     public void putUser(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.saveOrUpdate(user);
@@ -19,12 +29,15 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
-    public void deleteUser(String userName) {
+    public User deleteUser(String userName) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         User user = getUser(userName);
-        session.delete(user);
-        session.flush();
+        if (user != null) {
+            session.delete(user);
+            session.flush();
+        }
         session.close();
+        return user;
     }
 
     public User getUser(String userName) {
