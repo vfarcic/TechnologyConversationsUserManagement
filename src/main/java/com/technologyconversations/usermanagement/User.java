@@ -21,7 +21,7 @@ public class User {
 
     @Id
     @Column(name = "user_name")
-    private String userName; // TODO Máximo de 20 caracteres. Debe ser identificador único. Sólo puede contener caracteres alfanuméricos.
+    private String userName;
     public String getUserName() {
         return userName;
     }
@@ -30,7 +30,7 @@ public class User {
     }
 
     @Column(name = "password")
-    private String password; // TODO Mínimo de 8 caracteres. Debe contener alguna mayúscula y algún dígito. Encriptar  el password al persistirlo.
+    private String password;
     public String getPassword() {
         return password;
     }
@@ -39,7 +39,7 @@ public class User {
     }
 
     @Column(name = "full_name")
-    private String fullName; // TODO Obligatorio. Máximo de 200 caracteres. Sólo debe aceptar letras y espacios.
+    private String fullName;
     public String getFullName() {
         return fullName;
     }
@@ -48,7 +48,7 @@ public class User {
     }
 
     @Column(name = "updated")
-    private Date updated; // TODO Debe contener la fecha de la última actualización. Este campo no debe ser editable, sólo debe visualizarse en el formulario.
+    private Date updated;
     public Date getUpdated() {
         return updated;
     }

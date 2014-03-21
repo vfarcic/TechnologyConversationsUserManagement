@@ -11,6 +11,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 import java.util.Date;
 
 import static com.technologyconversations.usermanagement.StatusEnum.*;
@@ -36,9 +37,9 @@ public class UserResourceTest extends CommonTest {
         user.setFullName("Viktor Farcic");
         user.setUpdated(new Date());
         userDao.putUser(user);
-        server = Main.startServer();
+        server = Server.startServer();
         client = ClientBuilder.newClient();
-        target = client.target(Main.BASE_URI).path("users/user/vfarcic.json");
+        target = client.target(Server.BASE_API_URI).path("users/user/vfarcic.json");
         objectMapper = new ObjectMapper();
         userJson = objectMapper.writeValueAsString(user);
     }
@@ -73,7 +74,7 @@ public class UserResourceTest extends CommonTest {
 
     @Test
     public void getUserShouldReturnStatusNokIfSpecifiedUserDoesNotExist() throws Exception {
-        target = client.target(Main.BASE_URI).path("users/user/non_existent_user.json");
+        target = client.target(Server.BASE_API_URI).path("users/user/non_existent_user.json");
         String json = target.request().get(String.class);
         User actual =  objectMapper.readValue(json, User.class);
         assertThat(actual.getStatus(), is(NOK));
@@ -106,7 +107,7 @@ public class UserResourceTest extends CommonTest {
 
     @Test
     public void deleteUserShouldReturnStatusNokIfSpecifiedUserDoesNotExist() throws Exception {
-        target = client.target(Main.BASE_URI).path("users/user/non_existent_user.json");
+        target = client.target(Server.BASE_API_URI).path("users/user/non_existent_user.json");
         String json = target.request().delete(String.class);
         User actual =  objectMapper.readValue(json, User.class);
         assertThat(actual.getStatus(), is(equalTo(NOK)));
@@ -147,6 +148,13 @@ public class UserResourceTest extends CommonTest {
         userJson = objectMapper.writeValueAsString(user);
         target.request().put(Entity.text(userJson), String.class);
         assertThat(userDao.getUser(userName).getFullName(), is(fullName));
+    }
+
+    @Test
+    public void putUserShouldReturnStatusNokIfFullNameIsGreaterThan200Characters() {
+        char[] charArray = new char[250];
+        Arrays.fill(charArray, 'X');
+        String fullName = new String(charArray);
     }
 
 }

@@ -33,9 +33,9 @@ public class UsersResourceTest {
             user.setUserName("vfarcic" + index);
             UserDaoImpl.getInstance().putUser(user);
         }
-        server = Main.startServer();
+        server = Server.startServer();
         Client c = ClientBuilder.newClient();
-        target = c.target(Main.BASE_URI).path("users/all.json");
+        target = c.target(Server.BASE_API_URI).path("users/all.json");
         mapper = new ObjectMapper();
     }
 

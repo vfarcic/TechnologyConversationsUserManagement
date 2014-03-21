@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Management</title>
+    <script src="/usermanagement/javascripts/jquery-2.1.0.min.js"></script>
+    <script src="/usermanagement/javascripts/angular.min.js"></script>
+    <script src="/usermanagement/javascripts/bootstrap.min.js"></script>
+    <script src="/usermanagement/javascripts/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="/usermanagement/javascripts/usermanagement.js"></script>
+    <link href="/usermanagement/stylesheets/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-app="userManagementModule">
+    <div class="container-fluid" ng-controller="usersListCtrl">
+        <div class="row">
+            <div class="col-md-4">
+                <div ng-repeat="user in users">
+                    <a href="#" type="button" ng-click="updateUser(user.userName)">{{user.fullName}} ({{user.userName}})</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <form class="form-horizontal" role="form" id="userForm" name="userForm">
+                    <div class="form-group" ng-class="getCssClass(userForm.userFullName)">
+                        <label for="userFullName">Full Name</label>
+                        <input id="userFullName" name="userFullName" class="form-control" type="text" ng-model="user.fullName" placeholder="Full Name" required maxlength="200" ng-pattern="onlyLettersAndSpace()">
+                        <div class="help-block" ng-show="userForm.userFullName.$dirty && userForm.userFullName.$invalid">Invalid:
+                            <span ng-show="userForm.userFullName.$error.required">Full Name is required</span>
+                            <span ng-show="userForm.userFullName.$error.pattern">Full Name can contain only letters and space character</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
