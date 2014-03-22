@@ -13,19 +13,49 @@
     <div class="container-fluid" ng-controller="usersListCtrl">
         <div class="row">
             <div class="col-md-4">
+                <div>
+                    <a href="#" type="button" ng-click="newUser()">Create New User</a>
+                </div>
                 <div ng-repeat="user in users">
                     <a href="#" type="button" ng-click="updateUser(user.userName)">{{user.fullName}} ({{user.userName}})</a>
                 </div>
             </div>
             <div class="col-md-8">
+                {{user}}
                 <form class="form-horizontal" role="form" id="userForm" name="userForm">
                     <div class="form-group" ng-class="getCssClass(userForm.userFullName)">
                         <label for="userFullName">Full Name</label>
-                        <input id="userFullName" name="userFullName" class="form-control" type="text" ng-model="user.fullName" placeholder="Full Name" required maxlength="200" ng-pattern="onlyLettersAndSpace()">
+                        <input id="userFullName" name="userFullName" class="form-control" type="text" ng-model="user.fullName" placeholder="Full Name" required ng-maxlength="200" ng-pattern="onlyLettersAndSpace()">
                         <div class="help-block" ng-show="userForm.userFullName.$dirty && userForm.userFullName.$invalid">Invalid:
+                            <span ng-show="userForm.userFullName.$error.maxlength">Full Name maximum length is 200 characters</span>
                             <span ng-show="userForm.userFullName.$error.required">Full Name is required</span>
-                            <span ng-show="userForm.userFullName.$error.pattern">Full Name can contain only letters and space character</span>
+                            <span ng-show="userForm.userFullName.$error.pattern">Full Name can contain only letters and space characters</span>
                         </div>
+                    </div>
+                    <div class="form-group" ng-class="getCssClass(userForm.userUserName)">
+                        <label for="userUserName">User Name</label>
+                        <input id="userUserName" name="userUserName" class="form-control" type="text" ng-model="user.userName" placeholder="User Name" required ng-maxlength="20" ng-pattern="onlyAlphanumeric()">
+                        <div class="help-block" ng-show="userForm.userUserName.$dirty && userForm.userUserName.$invalid">Invalid:
+                            <span ng-show="userForm.userUserName.$error.maxlength">User Name maximum length is 20 characters</span>
+                            <span ng-show="userForm.userUserName.$error.required">User Name is required</span>
+                            <span ng-show="userForm.userUserName.$error.pattern">User Name can contain only alpha-numeric characters</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="getCssClass(userForm.userPassword)">
+                        <label for="userPassword">Password</label>
+                        <input id="userPassword" name="userPassword" class="form-control" type="text" ng-model="user.password" placeholder="Password" ng-minlength="8" ng-pattern="needsCapitalAndDigit()">
+                        <div class="help-block" ng-show="userForm.userPassword.$dirty && userForm.userPassword.$invalid">Invalid:
+                            <span ng-show="userForm.userPassword.$error.minlength">Password minimum length is 8 characters</span>
+                            <span ng-show="userForm.userPassword.$error.pattern">Password must contain at least one upper case character and one digit</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="showUpdated()">
+                        <label for="userUpdated">Updated</label>
+                        <div id="userUpdated">{{updated}}</div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canSaveUser()" ng-click="putUser()" type="button">{{putStoryOperation}}</button>
+                        <button class="btn btn-primary btn-danger" ng-disabled="!canDeleteUser()" ng-click="deleteUser()" type="button">Delete User</button>
                     </div>
                 </form>
             </div>

@@ -50,6 +50,9 @@ public class User {
     @Column(name = "updated")
     private Date updated;
     public Date getUpdated() {
+        if (updated == null) {
+            updated = new Date();
+        }
         return updated;
     }
     public void setUpdated(Date updated) {
@@ -65,6 +68,14 @@ public class User {
         this.status = status;
     }
 
+    private String statusMessage;
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,7 +84,6 @@ public class User {
         User user = (User) o;
 
         if (!fullName.equals(user.fullName)) return false;
-        if (!password.equals(user.password)) return false;
         if (!userName.equals(user.userName)) return false;
 
         return true;
@@ -82,7 +92,6 @@ public class User {
     @Override
     public int hashCode() {
         int result = userName.hashCode();
-        result = 31 * result + password.hashCode();
         result = 31 * result + fullName.hashCode();
         return result;
     }

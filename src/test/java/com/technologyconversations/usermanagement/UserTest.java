@@ -73,18 +73,15 @@ public class UserTest {
     }
 
     @Test
-    public void equalsShouldFailIfUsernameIsNotTheSame() {
-        User actual = new User("something");
-        actual.setPassword(password);
-        actual.setFullName(fullName);
-        actual.setUpdated(updated);
-        assertThat(actual, not(equalTo(user)));
+    public void updatedShouldHaveCurrentDateAsDefault() {
+        user.setUpdated(null);
+        assertThat(user.getUpdated(), is(not(nullValue())));
     }
 
     @Test
-    public void equalsShouldFailIfPasswordIsNotTheSame() {
-        User actual = new User(userName);
-        actual.setPassword("something");
+    public void equalsShouldFailIfUsernameIsNotTheSame() {
+        User actual = new User("something");
+        actual.setPassword(password);
         actual.setFullName(fullName);
         actual.setUpdated(updated);
         assertThat(actual, not(equalTo(user)));
