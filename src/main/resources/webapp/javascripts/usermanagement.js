@@ -5,6 +5,7 @@ angular.module('userManagementModule', ['ui.bootstrap'])
         $scope.putStoryOperation = "Create";
         $scope.getUsers = function() {
             $http.get('/usermanagementapi/users/all.json').then(function(response) {
+                console.log('Got users');
                 $scope.users = response.data;
             }, function(response) {
                 console.log(response);
@@ -12,11 +13,12 @@ angular.module('userManagementModule', ['ui.bootstrap'])
             });
         };
         $scope.getUsers();
-        $scope.updateUser = function(userName) {
+        $scope.getUser = function(userName) {
             $http.get('/usermanagementapi/users/user/' + userName + '.json').then(function(response) {
                 $scope.user = response.data;
                 $scope.originalUser = angular.copy($scope.user);
                 $scope.putStoryOperation = "Update";
+                console.log('Got user ' + userName);
             }, function(response) {
                 console.log(response);
                 // TODO Output to modal
@@ -88,10 +90,8 @@ function updateUser($scope, $http) {
             console.log(response);
             // TODO Output to modal
         } else {
-            $scope.user.password = '';
-            $scope.originalUser = angular.copy($scope.user);
+            $scope.users.push({userName: $scope.user.userName, fullName: $scope.user.fullName});
             $scope.putStoryOperation = "Update";
-            $scope.getUsers();
         }
     }, function(response) {
         console.log(response);

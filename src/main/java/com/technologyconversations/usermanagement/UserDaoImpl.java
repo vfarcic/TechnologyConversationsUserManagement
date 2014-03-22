@@ -2,6 +2,8 @@ package com.technologyconversations.usermanagement;
 
 import org.hibernate.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -48,9 +50,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         @SuppressWarnings("unchecked")
-        List<User> users = session.createQuery("from User").list();
+        List allUsers = session.createQuery("select userName, fullName from User").list();
+        for (Iterator it = allUsers.iterator(); it.hasNext(); ) {
+            Object[] userObject = (Object[]) it.next();
+            User user = new User();
+            user.setUserName((String) userObject[0]);
+            user.setFullName((String) userObject[1]);
+            users.add(user);
+        }
         session.close();
         return users;
     }

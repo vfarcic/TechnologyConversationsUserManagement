@@ -23,7 +23,7 @@ public class UsersResourceTest {
 
     @BeforeClass
     public static void beforeUsersResourceTestClass() {
-        server = Server.startServer();
+        server = new Server().startServer();
     }
 
     @Before

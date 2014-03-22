@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +66,20 @@ public class UserDaoImplTest extends CommonTest {
     public void getAllUsersShouldRetrieveAllUsers() {
         insertUsers(3);
         assertThat(userDao.getAllUsers().size(), is(3));
+    }
+
+    @Test
+    public void getAllUsersShouldContainUserName() {
+        insertUsers(1);
+        assertThat(userDao.getAllUsers().get(0).getUserName(), is(not(nullValue())));
+        assertThat(userDao.getAllUsers().get(0).getUserName(), is(not(equalTo(""))));
+    }
+
+    @Test
+    public void getAllUsersShouldContainFullName() {
+        insertUsers(1);
+        assertThat(userDao.getAllUsers().get(0).getFullName(), is(not(nullValue())));
+        assertThat(userDao.getAllUsers().get(0).getFullName(), is(not(equalTo(""))));
     }
 
     @Test

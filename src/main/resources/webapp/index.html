@@ -13,11 +13,12 @@
     <div class="container-fluid" ng-controller="usersListCtrl">
         <div class="row">
             <div class="col-md-4">
+                {{users}}
                 <div>
                     <a href="#" type="button" ng-click="newUser()">Create New User</a>
                 </div>
                 <div ng-repeat="user in users">
-                    <a href="#" type="button" ng-click="updateUser(user.userName)">{{user.fullName}} ({{user.userName}})</a>
+                    <a href="#" type="button" ng-click="getUser(user.userName)">{{user.fullName}} ({{user.userName}})</a>
                 </div>
             </div>
             <div class="col-md-8">
@@ -43,7 +44,7 @@
                     </div>
                     <div class="form-group" ng-class="getCssClass(userForm.userPassword)">
                         <label for="userPassword">Password</label>
-                        <input id="userPassword" name="userPassword" class="form-control" type="text" ng-model="user.password" placeholder="Password" ng-minlength="8" ng-pattern="needsCapitalAndDigit()">
+                        <input id="userPassword" name="userPassword" class="form-control" type="password" ng-model="user.password" placeholder="Password" ng-minlength="8" ng-pattern="needsCapitalAndDigit()">
                         <div class="help-block" ng-show="userForm.userPassword.$dirty && userForm.userPassword.$invalid">Invalid:
                             <span ng-show="userForm.userPassword.$error.minlength">Password minimum length is 8 characters</span>
                             <span ng-show="userForm.userPassword.$error.pattern">Password must contain at least one upper case character and one digit</span>
@@ -51,7 +52,7 @@
                     </div>
                     <div class="form-group" ng-show="showUpdated()">
                         <label for="userUpdated">Updated</label>
-                        <div id="userUpdated">{{updated}}</div>
+                        <div id="userUpdated">{{user.updated | date:'medium'}}</div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canSaveUser()" ng-click="putUser()" type="button">{{putStoryOperation}}</button>

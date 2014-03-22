@@ -31,7 +31,7 @@ public class UserResourceTest extends CommonTest {
 
     @BeforeClass
     public static void beforeUserResourceTestClass() {
-        server = Server.startServer();
+        server = new Server().startServer();
     }
 
     @Before
