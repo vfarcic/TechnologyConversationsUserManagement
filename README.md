@@ -1,14 +1,11 @@
 Tools/frameworks
 
+* IDEA
 * JDK7
-* JUnit/Hamcrest
-* HSQLDB
-* Hibernate
-
+* Maven
 
 Files
 
-* .travis.yalm
 * pom.xml
 * hibernate.cfg.xml
 * HibernateUtil.java

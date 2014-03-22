@@ -2,9 +2,7 @@ package com.technologyconversations.usermanagement;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Client;
@@ -20,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 
 public class UserResourceTest extends CommonTest {
 
-    private HttpServer server;
+    private static HttpServer server;
     private WebTarget target;
     private User user;
     private Client client;
@@ -31,13 +29,17 @@ public class UserResourceTest extends CommonTest {
     private String fullName = "Viktor Farcic";
     private String password = "Password1";
 
+    @BeforeClass
+    public static void beforeUserResourceTestClass() {
+        server = Server.startServer();
+    }
+
     @Before
-    public void beforeMyResourceTest() throws Exception {
+    public void beforeUserResourceTest() throws Exception {
         user = new User(userName);
         user.setPassword(password);
         user.setFullName(fullName);
         user.setUpdated(new Date());
-        server = Server.startServer();
         client = ClientBuilder.newClient();
         target = client.target(Server.BASE_API_URI).path("users/user/" + userName + ".json");
         objectMapper = new ObjectMapper();
@@ -46,8 +48,12 @@ public class UserResourceTest extends CommonTest {
     }
 
     @After
-    public void afterMyResourceTest() throws Exception {
+    public void afterUserResourceTest() throws Exception {
         userDao.deleteAllUsers();
+    }
+
+    @AfterClass
+    public static void afterUserResourceTestClass() {
         server.shutdown();
     }
 

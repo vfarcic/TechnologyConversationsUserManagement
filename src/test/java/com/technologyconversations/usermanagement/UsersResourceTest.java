@@ -2,9 +2,7 @@ package com.technologyconversations.usermanagement;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -19,12 +17,17 @@ import static com.technologyconversations.usermanagement.StatusEnum.*;
 
 public class UsersResourceTest {
 
-    private HttpServer server;
+    private static HttpServer server;
     private WebTarget target;
     ObjectMapper mapper;
 
+    @BeforeClass
+    public static void beforeUsersResourceTestClass() {
+        server = Server.startServer();
+    }
+
     @Before
-    public void beforeMyResourceTest() throws Exception {
+    public void beforeUsersResourceTest() throws Exception {
         User user = new User();
         user.setPassword("password");
         user.setFullName("Viktor Farcic");
@@ -33,14 +36,14 @@ public class UsersResourceTest {
             user.setUserName("vfarcic" + index);
             UserDaoImpl.getInstance().putUser(user);
         }
-        server = Server.startServer();
+
         Client c = ClientBuilder.newClient();
         target = c.target(Server.BASE_API_URI).path("users/all.json");
         mapper = new ObjectMapper();
     }
 
-    @After
-    public void afterMyResourceTest() throws Exception {
+    @AfterClass
+    public static void afterUsersResourceTestClass() {
         server.shutdown();
     }
 
